@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SANCHO BAKER TRANSIT STATION</title>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'VT323', monospace;
+      background-color: #000;
+      color: #00ff00;
+      overflow: hidden;
+    }
+
+    .spinning-icon {
+      width: 96px;
+      height: 96px;
+      margin: 0 40px;
+      animation: spin 6s linear infinite;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    #splash-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: url('/images/TRAIN.gif') repeat;
+      background-size: cover;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+    }
+
+    #splash-screen.hidden {
+      transform: translateY(-100%);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .splash-logo {
+      max-width: 80%;
+      max-height: 60vh;
+      margin-bottom: 2rem;
+      border: 2px solid #00ff00;
+      border-right-color: #303030;
+      border-bottom-color: #303030;
+      padding: 2px;
+      background: white;
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    }
+
+    .enter-button {
+      font-family: 'VT323', monospace;
+      padding: 10px 20px;
+      background: #C0C0C0;
+      border: 2px outset #fff;
+      color: #000;
+      font-size: 1.2rem;
+      cursor: pointer;
+      text-shadow: 1px 1px #fff;
+    }
+
+    .enter-button:active {
+      border-style: inset;
+      padding: 11px 19px 9px 21px;
+    }
+
+    .loading-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease-in-out;
+    }
+
+    .loading-screen.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .loading-screen img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .navigation-container {
+      position: relative;
+      width: 100vw;
+      height: calc(100vh - 32px);
+      margin-top: 32px;
+      overflow: hidden;
+    }
+
+    .animated-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('/images/ITIT.gif') repeat;
+      background-size: cover;
+      z-index: 2;
+    }
+
+    .map-section {
+      position: relative;
+      height: 100%;
+      padding: 2rem;
+      display: flex;
+      align-items: center;
+      z-index: 3;
+    }
+
+    .map-overlay {
+      position: relative;
+      width: 90vw;
+      height: calc(90vh - 32px);
+      z-index: 4;
+    }
+
+    .station-button {
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      animation: win95Pulsate 2s infinite;
+    }
+
+    .station-button rect {
+      fill: #C0C0C0 !important;
+      stroke-width: 2;
+      stroke: #FFFFFF !important;
+      filter: url(#win95Bevel);
+    }
+
+    .station-button text {
+      font-family: 'VT323', monospace;
+      font-size: 14px;
+      fill: #000000;
+      text-anchor: middle;
+      dominant-baseline: middle;
+      pointer-events: none;
+      user-select: none;
+      font-weight: bold;
+    }
+
+    .station-button:hover rect {
+      fill: #D4D4D4 !important;
+    }
+
+    .station-button:active rect {
+      fill: #A0A0A0 !important;
+      stroke: #808080 !important;
+      filter: url(#win95BevelPressed);
+    }
+
+    @keyframes win95Pulsate {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    .text-banner {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: #c0c0c0;
+      padding: 6px;
+      z-index: 100;
+      border-top: 2px solid #ffffff;
+      border-left: 2px solid #ffffff;
+      border-right: 2px solid #808080;
+      border-bottom: 2px solid #808080;
+      box-shadow: inset 1px 1px #dfdfdf, inset -1px -1px #0a0a0a;
+      overflow: hidden;
+      height: 32px;
+      display: flex;
+      align-items: center;
+    }
+
+    .banner-content {
+      display: inline-block;
+      white-space: nowrap;
+      animation: scrollText 40s linear infinite;
+      color: #000000;
+      font-size: 18px;
+      padding-right: 50px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .win95-button {
+      display: inline-block;
+      padding: 4px 12px;
+      margin: 0 4px;
+      background: #000080;
+      border-top: 2px solid #dfdfdf;
+      border-left: 2px solid #dfdfdf;
+      border-right: 2px solid #404040;
+      border-bottom: 2px solid #404040;
+      font-size: 16px;
+      color: #ffffff;
+      text-shadow: 1px 1px #000000;
+      vertical-align: middle;
+    }
+
+    .win95-button:hover {
+      background: #0000a0;
+    }
+
+    .time-display {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 12px;
+      margin-left: 8px;
+      background: #000000;
+      color: #00ff00;
+      border-top: 2px solid #808080;
+      border-left: 2px solid #808080;
+      border-right: 2px solid #ffffff;
+      border-bottom: 2px solid #ffffff;
+      box-shadow: inset 1px 1px #0a0a0a;
+      font-weight: bold;
+      min-width: 100px;
+      justify-content: center;
+    }
+
+    .separator {
+      margin: 0 4px;
+      color: #000000;
+      font-weight: bold;
+      font-size: 20px;
+    }
+
+    .status-indicator {
+      color: #008000;
+      font-weight: bold;
+    }
+
+    @keyframes scrollText {
+      from { transform: translateX(100%); }
+      to { transform: translateX(-100%); }
+    }
+
+    .band-logo-container {
+      position: relative;
+      max-width: 600px;
+      margin-right: 2rem;
+      z-index: 5;
+    }
+
+    .band-logo-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('/images/CUBE.gif');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+      z-index: 0;
+    }
+
+    .band-logo {
+      position: relative;
+      max-width: 100%;
+      filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+      z-index: 1;
+    }
+
+    .spinning-icons-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .welcome-box {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #ADD8E6;
+      padding: 15px;
+      border: 2px outset #fff;
+      font-family: 'VT323', monospace;
+      color: #000;
+      text-align: center;
+      z-index: 1000;
+      width: auto;
+      white-space: nowrap;
+    }
+  </style>
+</head>
+<body>
+  <div class="loading-screen">
+    <img src="/images/LOOD.gif" alt="Loading...">
+  </div>
+
+  <div id="splash-screen">
+    <img src="/logos/sblogo.jpg" alt="Sancho Baker Logo" class="splash-logo">
+    <button class="enter-button">ENTER * ENTER</button>
+  </div>
+
+  <div class="navigation-container hidden" id="main-content">
+    <div class="animated-background"></div>
+    
+    <div class="text-banner">
+      <div class="banner-content">
+        <span class="win95-button">SANCHO BAKER TRANSIT STATION</span>
+        <span class="separator">║</span>
+        <span class="win95-button">STATUS: <span class="status-indicator">ONLINE</span></span>
+        <span class="separator">║</span>
+        <span class="win95-button">SELECT STATION</span>
+        <span class="separator">║</span>
+        <span class="win95-button">SYSTEM TIME:</span>
+        <span class="time-display">00:00:00</span>
+        <span class="separator">║</span>
+        <span class="win95-button">SANCHO BAKER TRANSIT STATION</span>
+        <span class="separator">║</span>
+        <span class="win95-button">STATUS: <span class="status-indicator">ONLINE</span></span>
+        <span class="separator">║</span>
+        <span class="win95-button">SELECT STATION</span>
+        <span class="separator">║</span>        
+      </div>
+    </div>
+
+    <div class="map-section">
+      <div class="band-logo-container">
+        <div class="band-logo-background"></div>
+        <img src="/images/STST.png" alt="Band Logo" class="band-logo">
+      </div>
+      
+      <div class="spinning-icons-container">
+        <img src="/images/CD.gif" alt="Spinning Icon" class="spinning-icon">
+        <img src="/images/MECH.gif" alt="Spinning Icon" class="spinning-icon">
+        <img src="/images/SAFE.gif" alt="Spinning Icon" class="spinning-icon">
+      </div>
+      
+      <div class="map-overlay">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="100%" height="100%">
+          <defs>
+            <filter id="win95Bevel">
+              <feFlood flood-color="white" result="highlightColor"/>
+              <feFlood flood-color="#808080" result="shadowColor"/>
+              <feOffset dx="-1" dy="-1" in="SourceAlpha" result="topLeft"/>
+              <feComposite operator="in" in="highlightColor" in2="topLeft" result="highlight"/>
+              <feOffset dx="1" dy="1" in="SourceAlpha" result="bottomRight"/>
+              <feComposite operator="in" in="shadowColor" in2="bottomRight" result="shadow"/>
+              <feMerge>
+                <feMergeNode in="highlight"/>
+                <feMergeNode in="shadow"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+            <filter id="win95BevelPressed">
+              <feFlood flood-color="#808080" result="highlightColor"/>
+              <feFlood flood-color="white" result="shadowColor"/>
+              <feOffset dx="1" dy="1" in="SourceAlpha" result="topLeft"/>
+              <feComposite operator="in" in="highlightColor" in2="topLeft" result="highlight"/>
+              <feOffset dx="-1" dy="-1" in="SourceAlpha" result="bottomRight"/>
+              <feComposite operator="in" in="shadowColor" in2="bottomRight" result="shadow"/>
+              <feMerge>
+                <feMergeNode in="highlight"/>
+                <feMergeNode in="shadow"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+
+          <g stroke-width="9" fill="none">
+            <path d="M50,50 L200,50 C250,50 300,100 300,150 L400,150 C450,150 500,200 600,200 L750,350" 
+                  stroke="#FF0000"/>
+            <path d="M50,250 C100,250 150,250 200,250 C250,250 300,250 350,250 L450,250 C500,250 550,250 600,250 L750,250" 
+                  stroke="#0000FF"/>
+            <path d="M350,50 C350,100 350,150 350,200 L350,300 C350,350 350,400 350,500" 
+                  stroke="#FF69B4"/>
+            <path d="M400,150 C400,200 400,250 400,300 C400,350 400,400 400,450 L400,550" 
+                  stroke="#0000FF"/>
+            <path d="M250,400 C300,400 350,400 400,400 C450,400 500,400 550,400" 
+                  stroke="#FF69B4"/>
+          </g>
+          
+          <g stroke-width="4" fill="none">
+            <path d="M150,100 L150,500" stroke="#FF9999"/>
+            <path d="M250,50 L250,450" stroke="#9999FF"/>
+            <path d="M450,100 L450,500" stroke="#FFB9D4"/>
+            <path d="M550,50 L550,450" stroke="#FF9999"/>
+            <path d="M650,100 L650,500" stroke="#9999FF"/>
+            <path d="M100,150 L700,150" stroke="#FFB9D4"/>
+            <path d="M100,350 L700,350" stroke="#FF9999"/>
+            <path d="M50,450 L750,450" stroke="#9999FF"/>
+            <path d="M200,100 L300,200" stroke="#FFB9D4"/>
+            <path d="M500,100 L600,200" stroke="#FF9999"/>
+            <path d="M300,300 L400,400" stroke="#9999FF"/>
+            <path d="M450,300 L550,400" stroke="#FFB9D4"/>
+          </g>
+          
+          <g class="connection-points">
+            <g class="station-button" onclick="navigateTo('about')">
+              <rect x="60" y="225" width="80" height="40" rx="0"/>
+              <text x="100" y="245">ABOUT</text>
+            </g>
+            
+            <g class="station-button" onclick="navigateTo('music')">
+              <rect x="660" y="225" width="80" height="40" rx="0"/>
+              <text x="700" y="245">MUSIC</text>
+            </g>
+            
+            <g class="station-button" onclick="navigateTo('shows')">
+              <rect x="60" y="125" width="80" height="40" rx="0"/>
+              <text x="100" y="145">SHOWS</text>
+            </g>
+            
+            <g class="station-button" onclick="navigateTo('links')">
+              <rect x="660" y="125" width="80" height="40" rx="0"/>
+              <text x="700" y="145">LINKS</text>
+            </g>
+          </g>
+        </svg>
+      </div>
+    </div>
+
+    <div class="welcome-box">
+      Welcome to SANCHO BAKER TRANSIT STATION - Ride the train to find out more
+    </div>
+  </div>
+
+  <script>
+    function navigateTo(page) {
+      const loadingScreen = document.querySelector('.loading-screen');
+      loadingScreen.classList.add('active');
+      
+      setTimeout(() => {
+        window.location.href = `/${page}`;
+      }, 2500);
+    }
+
+    document.querySelector('.enter-button').addEventListener('click', () => {
+      document.getElementById('splash-screen').classList.add('hidden');
+      document.getElementById('main-content').classList.remove('hidden');
+    });
+
+    function updateTime() {
+      const now = new Date();
+      const timeString = now.toLocaleTimeString();
+      document.querySelector('.time-display').textContent = timeString;
+    }
+
+    setInterval(updateTime, 1000);
+    updateTime();
+
+    document.querySelectorAll('.station-button').forEach(button => {
+      const originalTextX = {};
+      const originalTextY = {};
+
+      const text = button.querySelector('text');
+      originalTextX[button.id] = text.getAttribute('x');
+      originalTextY[button.id] = text.getAttribute('y');
+
+      button.addEventListener('mouseenter', () => {
+        const rect = button.querySelector('rect');
+        rect.style.fill = '#D4D4D4';
+      });
+
+      button.addEventListener('mouseleave', () => {
+        const rect = button.querySelector('rect');
+        const text = button.querySelector('text');
+        rect.style.fill = '#C0C0C0';
+        text.setAttribute('x', originalTextX[button.id] || '100');
+        text.setAttribute('y', originalTextY[button.id] || '245');
+      });
+
+      button.addEventListener('mousedown', () => {
+        const rect = button.querySelector('rect');
+        const text = button.querySelector('text');
+        rect.style.fill = '#A0A0A0';
+        const currentX = parseInt(text.getAttribute('x'));
+        const currentY = parseInt(text.getAttribute('y'));
+        text.setAttribute('x', currentX + 1);
+        text.setAttribute('y', currentY + 1);
+      });
+
+      button.addEventListener('mouseup', () => {
+        const rect = button.querySelector('rect');
+        const text = button.querySelector('text');
+        rect.style.fill = '#D4D4D4';
+        text.setAttribute('x', originalTextX[button.id] || '100');
+        text.setAttribute('y', originalTextY[button.id] || '245');
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+ <!-- Replace just the SVG section in your code with this updated version -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="100%" height="100%">
+  <!-- Main Transit Lines -->
+  <g stroke-width="6" fill="none">
+    <!-- Red Line -->
+    <path d="M50,50 L200,50 C250,50 300,100 300,150 L400,150 C450,150 500,200 600,200 L750,350" 
+          stroke="#FF0000"/>
+    <!-- Blue Line -->
+    <path d="M50,250 C100,250 150,250 200,250 C250,250 300,250 350,250 L450,250 C500,250 550,250 600,250 L750,250" 
+          stroke="#0000FF"/>
+    <!-- Pink Line -->
+    <path d="M350,50 C350,100 350,150 350,200 L350,300 C350,350 350,400 350,500" 
+          stroke="#FF69B4"/>
+    <!-- Blue Line Branch -->
+    <path d="M400,150 C400,200 400,250 400,300 C400,350 400,400 400,450 L400,550" 
+          stroke="#0000FF"/>
+    <!-- Pink Line Branch -->
+    <path d="M250,400 C300,400 350,400 400,400 C450,400 500,400 550,400" 
+          stroke="#FF69B4"/>
+  </g>
+
+  <!-- Secondary Routes - Making these lighter versions of the main colors -->
+  <g stroke-width="2" fill="none">
+    <path d="M150,100 L150,500" stroke="#FF9999"/>
+    <path d="M250,50 L250,450" stroke="#9999FF"/>
+    <path d="M450,100 L450,500" stroke="#FFB9D4"/>
+    <path d="M550,50 L550,450" stroke="#FF9999"/>
+    <path d="M650,100 L650,500" stroke="#9999FF"/>
+    <path d="M100,150 L700,150" stroke="#FFB9D4"/>
+    <path d="M100,350 L700,350" stroke="#FF9999"/>
+    <path d="M50,450 L750,450" stroke="#9999FF"/>
+    <path d="M200,100 L300,200" stroke="#FFB9D4"/>
+    <path d="M500,100 L600,200" stroke="#FF9999"/>
+    <path d="M300,300 L400,400" stroke="#9999FF"/>
+    <path d="M450,300 L550,400" stroke="#FFB9D4"/>
+  </g>
+
+  <!-- Navigation Buttons - Keep these unchanged -->
+  <g class="connection-points">
+    <!-- ABOUT button -->
+    <g class="station-button" onclick="navigateTo('about')">
+      <rect x="70" y="235" width="60" height="30" rx="2"/>
+      <text x="100" y="250">ABOUT</text>
+    </g>
+
+    <!-- MUSIC button -->
+    <g class="station-button" onclick="navigateTo('music')">
+      <rect x="670" y="235" width="60" height="30" rx="2"/>
+      <text x="700" y="250">MUSIC</text>
+    </g>
+
+    <!-- SHOWS button -->
+    <g class="station-button" onclick="navigateTo('shows')">
+      <rect x="70" y="135" width="60" height="30" rx="2"/>
+      <text x="100" y="150">SHOWS</text>
+    </g>
+
+    <!-- LINKS button -->
+    <g class="station-button" onclick="navigateTo('links')">
+      <rect x="670" y="135" width="60" height="30" rx="2"/>
+      <text x="700" y="150">LINKS</text>
+    </g>
+  </g>
+</svg>
