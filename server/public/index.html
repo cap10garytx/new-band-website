@@ -137,6 +137,20 @@
       z-index: 3;
     }
 
+    .map-overlay {
+      position: relative;
+      width: 60%;
+      height: 80vh;
+      margin-left: auto;
+      z-index: 4;
+    }
+
+    .map-overlay img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
     .band-logo-container {
       position: relative;
       width: 60vh;
@@ -170,29 +184,16 @@
       z-index: 0;
     }
 
-    .map-overlay {
-      position: relative;
-      width: 60%;
-      height: 80vh;
-      margin-left: auto;
-      z-index: 4;
-    }
-
-    .map-overlay svg {
-      width: 100%;
-      height: 100%;
-      filter: drop-shadow(0 0 10px rgba(0, 255, 0, 0.3));
-    }
-
     .station-button {
       cursor: pointer;
-      transition: transform 0.2s ease;
+      transition: all 0.1s ease;
     }
 
     .station-button rect {
       fill: #C0C0C0;
       stroke: #000000;
       stroke-width: 2;
+      filter: url(#win95Bevel);
     }
 
     .station-button text {
@@ -206,16 +207,17 @@
       font-weight: bold;
     }
 
-    .station-button:hover {
-      transform: scale(1.1);
-    }
-
     .station-button:hover rect {
       fill: #D4D4D4;
     }
 
     .station-button:active rect {
       fill: #A0A0A0;
+      filter: none;
+    }
+
+    .station-button:active {
+      transform: translate(1px, 1px);
     }
 
     .text-banner {
@@ -378,10 +380,10 @@
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="100%" height="100%">
           <defs>
             <filter id="win95Bevel">
-              <feFlood flood-color="white" flood-opacity="0.7" result="highlight"/>
-              <feOffset dx="-2" dy="-2" in="highlight" result="highlightOffset"/>
-              <feFlood flood-color="black" flood-opacity="0.3" result="shadow"/>
-              <feOffset dx="2" dy="2" in="shadow" result="shadowOffset"/>
+              <feFlood flood-color="white" flood-opacity="0.5" result="highlight"/>
+              <feOffset dx="-1" dy="-1" in="highlight" result="highlightOffset"/>
+              <feFlood flood-color="black" flood-opacity="0.5" result="shadow"/>
+              <feOffset dx="1" dy="1" in="shadow" result="shadowOffset"/>
               <feMerge>
                 <feMergeNode in="highlightOffset"/>
                 <feMergeNode in="shadowOffset"/>
@@ -390,6 +392,7 @@
             </filter>
           </defs>
 
+          <!-- Main Transit Lines -->
           <g stroke-width="6" fill="none">
             <path d="M50,50 L200,50 C250,50 300,100 300,150 L400,150 C450,150 500,200 600,200 L750,350" 
                   stroke="#FF0000"/>
@@ -403,6 +406,7 @@
                   stroke="#FF69B4"/>
           </g>
 
+          <!-- Secondary Routes -->
           <g stroke-width="2" fill="none">
             <path d="M150,100 L150,500" stroke="#FF9999"/>
             <path d="M250,50 L250,450" stroke="#9999FF"/>
@@ -418,6 +422,7 @@
             <path d="M450,300 L550,400" stroke="#FFB9D4"/>
           </g>
 
+          <!-- Navigation Buttons -->
           <g class="connection-points">
             <g class="station-button" onclick="navigateTo('about')">
               <rect x="70" y="235" width="80" height="40" rx="4"/>
@@ -449,54 +454,30 @@
   </div>
 
   <script>
-    class TimeDisplay {
-      constructor(elementId) {
-        this.element = document.getElementById(elementId);
-        if (!this.element) {
-          console.error(`Time display element with id "${elementId}" not found`);
-          return;
-        }
-        this.start();
-      }
-
-      updateTime() {
-        if (!this.element) return;
-        const now = new Date();
-        this.element.textContent = now.toLocaleTimeString();
-      }
-
-      start() {
-        this.updateTime();
-        setInterval(() => this.updateTime(), 1000);
-      }
-    }
-
     function navigateTo(page) {
       const loadingScreen = document.querySelector('.loading-screen');
-      if (loadingScreen) {
-        loadingScreen.classList.add('active');
-        setTimeout(() => {
-          window.location.href = `/${page}`;
-        }, 2500);
+      loadingScreen.classList.add('active');
+      
+      setTimeout(() => {
+        window.location.href = `/${page}`;
+      }, 2500);
+    }
+
+    document.querySelector('.enter-button').addEventListener('click', () => {
+      document.getElementById('splash-screen').classList.add('hidden');
+      document.getElementById('main-content').classList.remove('hidden');
+    });
+
+    function updateTime() {
+      const timeDisplay = document.getElementById('timeDisplay');
+      if (timeDisplay) {
+        const now = new Date();
+        timeDisplay.textContent = now.toLocaleTimeString();
       }
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
-      // Initialize time display
-      new TimeDisplay('timeDisplay');
-
-      // Initialize enter button
-      const enterButton = document.querySelector('.enter-button');
-      const splashScreen = document.getElementById('splash-screen');
-      const mainContent = document.getElementById('main-content');
-
-      if (enterButton && splashScreen && mainContent) {
-        enterButton.addEventListener('click', () => {
-          splashScreen.classList.add('hidden');
-          mainContent.classList.remove('hidden');
-        });
-      }
-    });
+    setInterval(updateTime, 1000);
+    updateTime();
   </script>
 </body>
 </html>
