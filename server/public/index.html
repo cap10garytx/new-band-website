@@ -16,9 +16,9 @@
     }
 
     .spinning-icon {
-      width: 96px;
-      height: 96px;
-      margin: 0 40px;
+      width: 400px;
+      height: 400px;
+      margin: 0 60px;
       animation: spin 6s linear infinite;
     }
 
@@ -33,7 +33,7 @@
       left: 0;
       width: 100vw;
       height: 100vh;
-      background: url('/public/images/TRAIN.gif') repeat;
+      background: url('images/TRAIN.gif') repeat;
       background-size: cover;
       display: flex;
       flex-direction: column;
@@ -42,7 +42,6 @@
       z-index: 1000;
       transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
     }
-
     #splash-screen.hidden {
       transform: translateY(-100%);
       opacity: 0;
@@ -50,31 +49,32 @@
     }
 
     .splash-logo {
-      max-width: 80%;
-      max-height: 60vh;
-      margin-bottom: 2rem;
-      border: 2px solid #00ff00;
+      max-width: 90%;
+      max-height: 80vh;
+      margin-bottom: 3rem;
+      border: 4px solid #00ff00;
       border-right-color: #303030;
       border-bottom-color: #303030;
-      padding: 2px;
+      padding: 4px;
       background: white;
-      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+      box-shadow: 0 0 40px rgba(0,0,0,0.3);
     }
 
     .enter-button {
       font-family: 'VT323', monospace;
-      padding: 10px 20px;
+      padding: 40px 80px;
       background: #C0C0C0;
-      border: 2px outset #fff;
+      border: 4px outset #fff;
       color: #000;
-      font-size: 1.2rem;
+      font-size: 4rem;
       cursor: pointer;
-      text-shadow: 1px 1px #fff;
+      text-shadow: 2px 2px #fff;
+      margin-top: 40px;
     }
 
     .enter-button:active {
       border-style: inset;
-      padding: 11px 19px 9px 21px;
+      padding: 41px 79px 39px 81px;
     }
 
     .loading-screen {
@@ -103,7 +103,6 @@
       height: 100%;
       object-fit: cover;
     }
-
     .hidden {
       display: none;
     }
@@ -111,8 +110,8 @@
     .navigation-container {
       position: relative;
       width: 100vw;
-      height: calc(100vh - 32px);
-      margin-top: 32px;
+      height: calc(100vh - 80px);
+      margin-top: 80px;
       overflow: hidden;
     }
 
@@ -122,7 +121,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: url('/public/images/ITIT.gif') repeat;
+      background: url('images/ITIT.gif') repeat;
       background-size: cover;
       z-index: 2;
     }
@@ -130,7 +129,7 @@
     .map-section {
       position: relative;
       height: 100%;
-      padding: 2rem;
+      padding: 4rem;
       display: flex;
       align-items: center;
       z-index: 3;
@@ -138,21 +137,62 @@
 
     .map-overlay {
       position: relative;
-      width: 90vw;
-      height: calc(90vh - 32px);
+      width: 60%;
+      height: 80vh;
+      margin-left: auto;
       z-index: 4;
     }
 
+    .map-overlay img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .band-logo-container {
+      position: relative;
+      width: 60vh;     /* Set to 60vh as specified */
+      height: 60vh;    /* Set to 60vh as specified */
+      margin-right: 4rem;
+      z-index: 5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .band-logo {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      max-width: none;
+      filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+      z-index: 1;
+    }
+    .band-logo-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('images/CUBE.gif');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 100% 100%;
+      z-index: 0;
+    }
+
+    /* Station Button Styles - Updated */
     .station-button {
       cursor: pointer;
+      transform: scale(2);
+      transform-origin: center;
       transition: transform 0.3s ease;
-      animation: win95Pulsate 2s infinite;
     }
 
     .station-button rect {
-      fill: #C0C0C0 !important;
+      fill: #C0C0C0; !important;
+      stroke: #000000;
       stroke-width: 2;
-      stroke: #FFFFFF !important;
       filter: url(#win95Bevel);
     }
 
@@ -168,19 +208,12 @@
     }
 
     .station-button:hover rect {
-      fill: #D4D4D4 !important;
+      fill: #D4D4D4; !important;
     }
 
     .station-button:active rect {
-      fill: #A0A0A0 !important;
-      stroke: #808080 !important;
-      filter: url(#win95BevelPressed);
-    }
-
-    @keyframes win95Pulsate {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-      100% { transform: scale(1); }
+      fill: #A0A0A0; !important;
+      stroke: #808080;
     }
 
     .text-banner {
@@ -189,43 +222,42 @@
       left: 0;
       width: 100%;
       background: #c0c0c0;
-      padding: 6px;
+      padding: 20px;
       z-index: 100;
-      border-top: 2px solid #ffffff;
-      border-left: 2px solid #ffffff;
-      border-right: 2px solid #808080;
-      border-bottom: 2px solid #808080;
-      box-shadow: inset 1px 1px #dfdfdf, inset -1px -1px #0a0a0a;
+      border-top: 4px solid #ffffff;
+      border-left: 4px solid #ffffff;
+      border-right: 4px solid #808080;
+      border-bottom: 4px solid #808080;
+      box-shadow: inset 2px 2px #dfdfdf, inset -2px -2px #0a0a0a;
       overflow: hidden;
-      height: 32px;
+      height: 80px;
       display: flex;
       align-items: center;
     }
-
     .banner-content {
       display: inline-block;
       white-space: nowrap;
       animation: scrollText 40s linear infinite;
       color: #000000;
-      font-size: 18px;
-      padding-right: 50px;
+      font-size: 48px;
+      padding-right: 100px;
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 32px;
     }
 
     .win95-button {
       display: inline-block;
-      padding: 4px 12px;
-      margin: 0 4px;
+      padding: 8px 24px;
+      margin: 0 8px;
       background: #000080;
-      border-top: 2px solid #dfdfdf;
-      border-left: 2px solid #dfdfdf;
-      border-right: 2px solid #404040;
-      border-bottom: 2px solid #404040;
-      font-size: 16px;
+      border-top: 4px solid #dfdfdf;
+      border-left: 4px solid #dfdfdf;
+      border-right: 4px solid #404040;
+      border-bottom: 4px solid #404040;
+      font-size: 48px;
       color: #ffffff;
-      text-shadow: 1px 1px #000000;
+      text-shadow: 2px 2px #000000;
       vertical-align: middle;
     }
 
@@ -236,30 +268,31 @@
     .time-display {
       display: inline-flex;
       align-items: center;
-      padding: 4px 12px;
-      margin-left: 8px;
+      padding: 8px 24px;
+      margin-left: 16px;
       background: #000000;
       color: #00ff00;
-      border-top: 2px solid #808080;
-      border-left: 2px solid #808080;
-      border-right: 2px solid #ffffff;
-      border-bottom: 2px solid #ffffff;
-      box-shadow: inset 1px 1px #0a0a0a;
+      border-top: 4px solid #808080;
+      border-left: 4px solid #808080;
+      border-right: 4px solid #ffffff;
+      border-bottom: 4px solid #ffffff;
+      box-shadow: inset 2px 2px #0a0a0a;
       font-weight: bold;
-      min-width: 100px;
+      min-width: 200px;
       justify-content: center;
+      font-size: 48px;
     }
 
     .separator {
-      margin: 0 4px;
+      margin: 0 8px;
       color: #000000;
       font-weight: bold;
-      font-size: 20px;
+      font-size: 48px;
     }
-
     .status-indicator {
       color: #008000;
       font-weight: bold;
+      font-size: 48px;
     }
 
     @keyframes scrollText {
@@ -267,66 +300,40 @@
       to { transform: translateX(-100%); }
     }
 
-    .band-logo-container {
-      position: relative;
-      max-width: 600px;
-      margin-right: 2rem;
-      z-index: 5;
-    }
-
-    .band-logo-background {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image: url('/public/images/CUBE.gif');
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: contain;
-      z-index: 0;
-    }
-
-    .band-logo {
-      position: relative;
-      max-width: 100%;
-      filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
-      z-index: 1;
-    }
-
     .spinning-icons-container {
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 40px;
+      margin-left: 80px;
     }
 
     .welcome-box {
       position: fixed;
-      bottom: 20px;
+      bottom: 40px;
       left: 50%;
       transform: translateX(-50%);
       background: #ADD8E6;
-      padding: 15px;
-      border: 2px outset #fff;
+      padding: 60px 80px;
+      border: 4px outset #fff;
       font-family: 'VT323', monospace;
       color: #000;
       text-align: center;
       z-index: 1000;
       width: auto;
       white-space: nowrap;
+      font-size: 68px;
     }
   </style>
 </head>
 <body>
   <div class="loading-screen">
-    <img src="/public/images/LOOD.gif" alt="Loading...">
+    <img src="images/LOOD.gif" alt="Loading...">
   </div>
 
   <div id="splash-screen">
-    <img src="/public/logos/sblogo.jpg" alt="Sancho Baker Logo" class="splash-logo">
+    <img src="logos/sblogo.jpg" alt="Sancho Baker Logo" class="splash-logo">
     <button class="enter-button">ENTER * ENTER</button>
   </div>
-
   <div class="navigation-container hidden" id="main-content">
     <div class="animated-background"></div>
     
@@ -353,18 +360,77 @@
     <div class="map-section">
       <div class="band-logo-container">
         <div class="band-logo-background"></div>
-        <img src="/public/images/STST.png" alt="Band Logo" class="band-logo">
+        <img src="images/STST.png" alt="Band Logo" class="band-logo">
       </div>
       
       <div class="spinning-icons-container">
-        <img src="/public/images/CD.gif" alt="Spinning Icon" class="spinning-icon">
-        <img src="/public/images/MECH.gif" alt="Spinning Icon" class="spinning-icon">
-        <img src="/public/images/SAFE.gif" alt="Spinning Icon" class="spinning-icon">
+        <img src="images/CD.gif" alt="Spinning Icon" class="spinning-icon">
+        <img src="images/MECH.gif" alt="Spinning Icon" class="spinning-icon">
+        <img src="images/SAFE.gif" alt="Spinning Icon" class="spinning-icon">
       </div>
-      
       <div class="map-overlay">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="100%" height="100%">
-          <!-- Your existing SVG content -->
+          <!-- Main Transit Lines -->
+          <g stroke-width="6" fill="none">
+            <!-- Red Line -->
+            <path d="M50,50 L200,50 C250,50 300,100 300,150 L400,150 C450,150 500,200 600,200 L750,350" 
+                  stroke="#FF0000"/>
+            <!-- Blue Line -->
+            <path d="M50,250 C100,250 150,250 200,250 C250,250 300,250 350,250 L450,250 C500,250 550,250 600,250 L750,250" 
+                  stroke="#0000FF"/>
+            <!-- Pink Line -->
+            <path d="M350,50 C350,100 350,150 350,200 L350,300 C350,350 350,400 350,500" 
+                  stroke="#FF69B4"/>
+            <!-- Blue Line Branch -->
+            <path d="M400,150 C400,200 400,250 400,300 C400,350 400,400 400,450 L400,550" 
+                  stroke="#0000FF"/>
+            <!-- Pink Line Branch -->
+            <path d="M250,400 C300,400 350,400 400,400 C450,400 500,400 550,400" 
+                  stroke="#FF69B4"/>
+          </g>
+
+          <!-- Secondary Routes -->
+          <g stroke-width="2" fill="none">
+            <path d="M150,100 L150,500" stroke="#FF9999"/>
+            <path d="M250,50 L250,450" stroke="#9999FF"/>
+            <path d="M450,100 L450,500" stroke="#FFB9D4"/>
+            <path d="M550,50 L550,450" stroke="#FF9999"/>
+            <path d="M650,100 L650,500" stroke="#9999FF"/>
+            <path d="M100,150 L700,150" stroke="#FFB9D4"/>
+            <path d="M100,350 L700,350" stroke="#FF9999"/>
+            <path d="M50,450 L750,450" stroke="#9999FF"/>
+            <path d="M200,100 L300,200" stroke="#FFB9D4"/>
+            <path d="M500,100 L600,200" stroke="#FF9999"/>
+            <path d="M300,300 L400,400" stroke="#9999FF"/>
+            <path d="M450,300 L550,400" stroke="#FFB9D4"/>
+          </g>
+
+          <!-- Navigation Buttons - Updated -->
+          <g class="connection-points">
+            <!-- ABOUT button -->
+            <g class="station-button" onclick="navigateTo('about')">
+              <rect x="70" y="235" width="80" height="40" rx="4"/>
+              <text x="110" y="255" font-size="18">ABOUT</text>
+            </g>
+
+            <!-- MUSIC button -->
+            <g class="station-button" onclick="navigateTo('music')">
+              <rect x="670" y="235" width="80" height="40" rx="4"/>
+              <text x="710" y="255" font-size="18">MUSIC</text>
+            </g>
+
+            <!-- SHOWS button -->
+            <g class="station-button" onclick="navigateTo('shows')">
+              <rect x="70" y="135" width="80" height="40" rx="4"/>
+              <text x="110" y="155" font-size="18">SHOWS</text>
+            </g>
+
+            <!-- LINKS button -->
+            <g class="station-button" onclick="navigateTo('links')">
+              <rect x="670" y="135" width="80" height="40" rx="4"/>
+              <text x="710" y="155" font-size="18">LINKS</text>
+            </g>
+          </g>
         </svg>
       </div>
     </div>
@@ -373,7 +439,6 @@
       Welcome to SANCHO BAKER TRANSIT STATION - Ride the train to find out more
     </div>
   </div>
-
   <script>
     function navigateTo(page) {
       const loadingScreen = document.querySelector('.loading-screen');
@@ -398,45 +463,71 @@
     setInterval(updateTime, 1000);
     updateTime();
 
+    // Add event listeners to all station buttons
     document.querySelectorAll('.station-button').forEach(button => {
       const originalTextX = {};
       const originalTextY = {};
 
       const text = button.querySelector('text');
-      originalTextX[button.id] = text.getAttribute('x');
-      originalTextY[button.id] = text.getAttribute('y');
+      if (text) {
+        originalTextX[button.id] = text.getAttribute('x');
+        originalTextY[button.id] = text.getAttribute('y');
+      }
 
       button.addEventListener('mouseenter', () => {
         const rect = button.querySelector('rect');
-        rect.style.fill = '#D4D4D4';
+        if (rect) rect.style.fill = '#D4D4D4';
       });
 
       button.addEventListener('mouseleave', () => {
         const rect = button.querySelector('rect');
         const text = button.querySelector('text');
-        rect.style.fill = '#C0C0C0';
-        text.setAttribute('x', originalTextX[button.id] || '100');
-        text.setAttribute('y', originalTextY[button.id] || '245');
+        if (rect) rect.style.fill = '#C0C0C0';
+        if (text) {
+          text.setAttribute('x', originalTextX[button.id] || '110');
+          text.setAttribute('y', originalTextY[button.id] || '255');
+        }
       });
 
       button.addEventListener('mousedown', () => {
         const rect = button.querySelector('rect');
         const text = button.querySelector('text');
-        rect.style.fill = '#A0A0A0';
-        const currentX = parseInt(text.getAttribute('x'));
-        const currentY = parseInt(text.getAttribute('y'));
-        text.setAttribute('x', currentX + 1);
-        text.setAttribute('y', currentY + 1);
+        if (rect) rect.style.fill = '#A0A0A0';
+        if (text) {
+          const currentX = parseInt(text.getAttribute('x'));
+          const currentY = parseInt(text.getAttribute('y'));
+          text.setAttribute('x', (currentX + 1).toString());
+          text.setAttribute('y', (currentY + 1).toString());
+        }
       });
 
       button.addEventListener('mouseup', () => {
         const rect = button.querySelector('rect');
         const text = button.querySelector('text');
-        rect.style.fill = '#D4D4D4';
-        text.setAttribute('x', originalTextX[button.id] || '100');
-        text.setAttribute('y', originalTextY[button.id] || '245');
+        if (rect) rect.style.fill = '#D4D4D4';
+        if (text) {
+          text.setAttribute('x', originalTextX[button.id] || '110');
+          text.setAttribute('y', originalTextY[button.id] || '255');
+        }
       });
     });
   </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,4 +1,4 @@
- <!-- Replace just the SVG section in your code with this updated version -->
+<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="100%" height="100%">
   <!-- Main Transit Lines -->
   <g stroke-width="6" fill="none">
@@ -19,7 +19,7 @@
           stroke="#FF69B4"/>
   </g>
 
-  <!-- Secondary Routes - Making these lighter versions of the main colors -->
+  <!-- Secondary Routes -->
   <g stroke-width="2" fill="none">
     <path d="M150,100 L150,500" stroke="#FF9999"/>
     <path d="M250,50 L250,450" stroke="#9999FF"/>
@@ -35,30 +35,53 @@
     <path d="M450,300 L550,400" stroke="#FFB9D4"/>
   </g>
 
-  <!-- Navigation Buttons - Keep these unchanged -->
-  <g class="connection-points">
+  <!-- Navigation Buttons -->
+<g class="connection-points">
     <!-- ABOUT button -->
     <g class="station-button" onclick="navigateTo('about')">
-      <rect x="70" y="235" width="60" height="30" rx="2"/>
-      <text x="100" y="250">ABOUT</text>
+        <rect x="70" y="235" width="80" height="40" rx="4" 
+              style="fill: #C0C0C0; stroke: #000000; stroke-width: 2;" filter="url(#win95Bevel)"/>
+        <text x="110" y="255" font-size="18" 
+              style="fill: #000000; font-weight: bold; font-family: 'VT323', monospace;">ABOUT</text>
     </g>
 
     <!-- MUSIC button -->
     <g class="station-button" onclick="navigateTo('music')">
-      <rect x="670" y="235" width="60" height="30" rx="2"/>
-      <text x="700" y="250">MUSIC</text>
+        <rect x="670" y="235" width="80" height="40" rx="4"
+              style="fill: #C0C0C0; stroke: #000000; stroke-width: 2;" filter="url(#win95Bevel)"/>
+        <text x="710" y="255" font-size="18"
+              style="fill: #000000; font-weight: bold; font-family: 'VT323', monospace;">MUSIC</text>
     </g>
 
     <!-- SHOWS button -->
     <g class="station-button" onclick="navigateTo('shows')">
-      <rect x="70" y="135" width="60" height="30" rx="2"/>
-      <text x="100" y="150">SHOWS</text>
+        <rect x="70" y="135" width="80" height="40" rx="4"
+              style="fill: #C0C0C0; stroke: #000000; stroke-width: 2;" filter="url(#win95Bevel)"/>
+        <text x="110" y="155" font-size="18"
+              style="fill: #000000; font-weight: bold; font-family: 'VT323', monospace;">SHOWS</text>
     </g>
 
     <!-- LINKS button -->
     <g class="station-button" onclick="navigateTo('links')">
-      <rect x="670" y="135" width="60" height="30" rx="2"/>
-      <text x="700" y="150">LINKS</text>
+        <rect x="670" y="135" width="80" height="40" rx="4"
+              style="fill: #C0C0C0; stroke: #000000; stroke-width: 2;" filter="url(#win95Bevel)"/>
+        <text x="710" y="155" font-size="18"
+              style="fill: #000000; font-weight: bold; font-family: 'VT323', monospace;">LINKS</text>
     </g>
-  </g>
+</g>
+
+  <!-- Define filters for button effects -->
+  <defs>
+    <filter id="win95Bevel">
+      <feFlood flood-color="white" flood-opacity="0.5" result="highlight"/>
+      <feOffset dx="-1" dy="-1" in="highlight" result="highlightOffset"/>
+      <feFlood flood-color="black" flood-opacity="0.5" result="shadow"/>
+      <feOffset dx="1" dy="1" in="shadow" result="shadowOffset"/>
+      <feMerge>
+        <feMergeNode in="highlightOffset"/>
+        <feMergeNode in="shadowOffset"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
 </svg>
